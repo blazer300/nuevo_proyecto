@@ -24,6 +24,7 @@ label.logo{
 nav ul{
     float: right;
     margin-right:20px;
+    margin-top: -9px;
 }
 nav ul li{
     display: inline-block;
@@ -54,6 +55,7 @@ display: none;
     display: none;
 }
 @media(max-width:952px){
+   
   label.logo{
       font-size: 30px;
       padding-left: 50px;
@@ -66,9 +68,9 @@ display: none;
     .checkbtn{
         display: block;
     }
-    ul{
+    ul{ z-index: 100;
         position: fixed;
-        width: 100%;
+        width: 25%;
         height: 100vh;
         background: #2c3e50;
         top:80px;
@@ -89,8 +91,101 @@ display: none;
         color: #0082e6;
     }
     #check:checked ~ ul{
-        left:0;
+        left:500px;
     }
+    .slide__titulo{
+        
+        font-size: 20px;
+    }  
+    .slide__titulo h1{
+        margin-top: 8px;
+    }
+    .slide__titulo p{
+        display: none;
+        width: 50%;
+    }
+    
 }
 
 /* -------------------- */
+
+.slide{
+    position: relative;
+    color: white;
+    font-family: 'STIX Two Text', serif;
+   
+}
+.slide h1{
+    padding-top: 24px;
+    font-size: 28px;
+    font-weight: 600;
+}
+.slide p{
+    padding-top: 20px;
+    font-size: 20px;
+}
+.slide__titulo{
+    margin-top: -17px;
+    position:absolute;
+    text-align: center;
+    background: rgb(0 0 0 / 50%);
+    height: 102%;
+    width: 100%;
+}
+.slide__imagen{
+    width:1900px ;
+    height: 630px;
+    margin-top: -17px;
+}
+
+/*-----------------------------*/
+.servicios{
+    background: #203e55;
+    padding: 24px 0;
+ margin-top: -4px;
+}
+.servicios_tit{
+    margin-bottom: 16px;
+    font-family: 'STIX Two Text', serif;
+    text-align: center;
+    font-size: 35px;
+    color: black;
+    
+    
+ }
+
+ 
+.servicios_art{
+    display: flex;
+    flex-direction: row;
+}
+
+.servicios_art-rif{
+    text-align: center;
+}
+.servicios_art-esc{
+    text-align: center;
+}
+.servicios_art-pist{
+    text-align: center;
+}
+.servicios_art-tit{
+    font-size: 30px;
+    color: #c7bbec;
+}
+.servicios_art-par{
+    font-size: 15px;
+    color: black;
+
+}
+@media screen and (max-width:700px) {
+    .servicios_art{
+        display: flex;
+        flex-direction: column;
+    }
+ 
+  }
+
+
+/* -------------------Footer------------------------ */
+
