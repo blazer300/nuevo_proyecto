@@ -8,16 +8,16 @@ constructor(nombre,precio,detalle,cantidad,total){
     this.total= total;
     this.disponible = true;
 }
-sumarIVA(){ //IVA
+sumarIVA(){ // funcion para calcular IVA con los datos ingresados por prompt
     return this.total * 1.21
 }
 descuento(){ //DESCUENTO
     return this.total - (this.total * .25)}
 }
-var arrayProductos = [];
+var arrayProductos = [];// En este array de objetos guardo los productos de mi tienda
 do{
 var comprobacion = prompt("Ingrese un nombre del producto o fin para terminar de agregar");
-if (comprobacion === "fin"|| comprobacion ==="FIN"|| comprobacion ==="Fin")
+if (comprobacion === "fin"|| comprobacion ==="FIN"|| comprobacion ==="Fin")// Si no ingresan el dato correcto este ciclo se repite hasta que se cumpla.
 {
     break;
 }
@@ -35,7 +35,8 @@ while (comprobacion != "fin"|| comprobacion !="FIN"|| comprobacion !="Fin")
 
 console.log(arrayProductos)
 
-for(var producto of arrayProductos){
+//Se muestran los detalles de la compra en la pagina
+  for(var producto of arrayProductos){
     document.write("<ul><li><h3>Nombre: " + producto.nombre + "</h3></li>")
     document.write("<li><h3>Detalle: " + producto.detalle + "</h3></li>")
     document.write("<li><h3>Cantidad: " + producto.cantidad + "</h3></li>")
@@ -43,26 +44,25 @@ for(var producto of arrayProductos){
     document.write("<li><h3>Total: " + producto.total + "</h3></li>")
     document.write("<li><h3>Precio con IVA es: " + producto.sumarIVA()+"</h3></li></ul><br>" )
 
-if(producto.sumarIVA() > 1000 ) {
+if(producto.sumarIVA() > 1000 ) {//Se usa la funcion para calcular el IVA 
     console.log(producto.sumarIVA())
     alert("tienes un descuento de %25!!,consulte a su asesor para mas informacion")
     document.write ("El precio del producto con descuento es de: " + producto.descuento())
   
 }
-
+//Detalles de la compra dentro de la condicion
     console.log(producto.nombre)
     console.log(producto.detalle)
     console.log(producto.cantidad)
     console.log(producto.total)
-    console.log(producto.sumarIVA)
+    console.log(producto.sumarIVA())
     console.log(producto.descuento)
 
 
 }
 
-
-//ORDENADOS POR CANTIDAD
-var ordenadosCantidad = []
+//LISTA DE PRODUCTOS ORDENADOS POR CANTIDAD
+var ordenadosCantidad = []//array de ordenados por cantidad
 ordenadosCantidad = arrayProductos.map(elemento =>elemento)
 ordenadosCantidad.sort(function(a,b){
     return a.cantidad- b.cantidad
@@ -76,8 +76,8 @@ document.write("<ul><li><h3>Nombre: "+producto.nombre + "</h3></li>")
 document.write("<li><h3>Detalle: "+producto.detalle + "</h3></li>")
 document.write("<li><h3>Cantidad: "+producto.cantidad + "</h3></li></ul></br>")
 }
-//ORDENADOS POR PRECIO
-var ordenadosPrecio = []
+//LISTA DE PRODUCTOS ORDENADOS POR PRECIO
+var ordenadosPrecio = []//array de ordenados por precio
 ordenadosPrecio = arrayProductos.map(elemento => elemento)
 var ordenadosPrecio = arrayProductos
 ordenadosPrecio.sort(function(a,b){
