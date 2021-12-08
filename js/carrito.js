@@ -1,96 +1,111 @@
-class Producto 
-{
-constructor(nombre,precio,detalle,cantidad,total){
-    this.nombre = nombre;
-    this.precio = parseFloat(precio);
-    this.detalle = detalle;
-    this.cantidad = cantidad;
-    this.total= total;
-    this.disponible = true;
-}
-sumarIVA(){ // funcion para calcular IVA con los datos ingresados por prompt
-    return this.total * 1.21
-}
-descuento(){ //DESCUENTO
-    return this.total - (this.total * .25)}
-}
-var arrayProductos = [];// En este array de objetos guardo los productos de mi tienda
-do{
-var comprobacion = prompt("Ingrese un nombre del producto o fin para terminar de agregar");
-if (comprobacion === "fin"|| comprobacion ==="FIN"|| comprobacion ==="Fin")// Si no ingresan el dato correcto este ciclo se repite hasta que se cumpla.
-{
-    break;
-}
-    else
-{
-nombreP = comprobacion;
-var precioP = prompt("ingrese el precio del producto")
-var detalleP = prompt("ingrese el detalle del producto")
-var cantidadP = prompt("Ingrese cantidad comprada del producto")
-var totalP = cantidadP * precioP
-arrayProductos.push(new Producto(nombreP , precioP ,detalleP ,  cantidadP , totalP))
+class Producto{//SE DEFINE EL CLASS PRODUCTO CON EL CONSTRUCTOR
+    constructor({id,nombre,precio,familia,calibre,modelo}){
+        this.nombre = nombre;
+        this.precio = precio;
+        this.familia = familia;
+        this.calibre = calibre;
+        this.model = modelo;
+        this.id = id
     }
 }
-while (comprobacion != "fin"|| comprobacion !="FIN"|| comprobacion !="Fin")
+class Tienda{//SE DEFINE EL CLASS DE LA TIENDA
+    constructor(){
+     this.stock = []
+    }//FUNCIONES
+    agregarProducto(producto){//AGREGA PRODUCTO AL CARD
+        this.stock.push(new Producto(producto))
 
-console.log(arrayProductos)
-
-//Se muestran los detalles de la compra en la pagina
-  for(var producto of arrayProductos){
-    document.write("<ul><li><h3>Nombre: " + producto.nombre + "</h3></li>")
-    document.write("<li><h3>Detalle: " + producto.detalle + "</h3></li>")
-    document.write("<li><h3>Cantidad: " + producto.cantidad + "</h3></li>")
-    document.write("<li><h3>Precio: " + producto.precio + "</h3></li>")
-    document.write("<li><h3>Total: " + producto.total + "</h3></li>")
-    document.write("<li><h3>Precio con IVA es: " + producto.sumarIVA()+"</h3></li></ul><br>" )
-
-if(producto.sumarIVA() > 1000 ) {//Se usa la funcion para calcular el IVA 
-    console.log(producto.sumarIVA())
-    alert("tienes un descuento de %25!!,consulte a su asesor para mas informacion")
-    document.write ("El precio del producto con descuento es de: " + producto.descuento())
-  
-}
-//Detalles de la compra dentro de la condicion
-    console.log(producto.nombre)
-    console.log(producto.detalle)
-    console.log(producto.cantidad)
-    console.log(producto.total)
-    console.log(producto.sumarIVA())
-    console.log(producto.descuento)
-
-
-}
-
-//LISTA DE PRODUCTOS ORDENADOS POR CANTIDAD
-var ordenadosCantidad = []//array de ordenados por cantidad
-ordenadosCantidad = arrayProductos.map(elemento =>elemento)
-ordenadosCantidad.sort(function(a,b){
-    return a.cantidad- b.cantidad
-})
-console.log("Ordenados por cantidad ascendente: ")
-console.log(ordenadosCantidad)
-document.write("<h3>Lista de Productos ordenados por cantidad: </h3>")
-
-for( var producto of ordenadosCantidad){
-document.write("<ul><li><h3>Nombre: "+producto.nombre + "</h3></li>")
-document.write("<li><h3>Detalle: "+producto.detalle + "</h3></li>")
-document.write("<li><h3>Cantidad: "+producto.cantidad + "</h3></li></ul></br>")
-}
-//LISTA DE PRODUCTOS ORDENADOS POR PRECIO
-var ordenadosPrecio = []//array de ordenados por precio
-ordenadosPrecio = arrayProductos.map(elemento => elemento)
-var ordenadosPrecio = arrayProductos
-ordenadosPrecio.sort(function(a,b){
-return a.precio- b.precio
-})
-console.log("Ordenados por precios ascendentes:")
-console.log(ordenadosPrecio)
-document.write("<h3>Lista de Productos ordenados por precio ascendente: </h3>")
-for( var producto of ordenadosPrecio){
-    document.write("<ul><li><h3>Nombre: "+producto.nombre + "</h3></li>")
-    document.write("<li><h3>Detalle: "+producto.detalle + "</h3></li>")
-    document.write("<li><h3>precio: "+producto.precio + "</h3></li></ul></br>")
     }
+    agregarProductos(arrayProductos){//AGREGA VARIOS PRODUCTOS AL CARD
+        arrayProductos.forEach(producto => this.agregarProducto(producto))
+            
+    
+    }
+    devolverCategorias(categorias){//DEVUELVE EL CARD POR CATEGORIA
+     return this.stock.filter(producto => categorias.includes(producto.familia))
+    }
+    devolverCard(categorias){//DEVUELVE POR PRECIO
+       let filtrado = this.devolverCategorias(categorias)
+        let max = Math.max(...filtrado.map(producto => producto.precio))
+        let min = Math.min(...filtrado.map(producto => producto.precio))
+
+        return `<div class="prod-rif">
+            <img src="./multimedia/rifles-eleccion.jpg" />
+            <table>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                </tr>
+
+                <tr>
+                    <td>Rifles</td>
+                    <td>$${min}USD - $${max}USD</td>
+                </tr>
+            </table>
+           
+            ${categorias.map(item => `<span>${item} </span>`).join("<br>")}
+            
+        
+            <form>
+                <label for="Eleccion-Rifle"></label>
+                <select name="Eleccion-Rifle">
+                ${filtrado.map(item => `<option>${item.nombre} </option>`).join("")}
+                </select>
+            </form>
+
+            <input type="submit" value="Comprar"/>
+            <input type="submit" value="Añadir al carrito"/>
+            </div>`
 
 
+    }
+    
+}
 
+
+const catalogo = [//SE DEFINE EL ARRAY DEL CATALOGO
+ 
+    {   id:1,
+        familia:"Automatico",
+        nombre:"Kalash Ak 47",
+        precio:500,
+        calibre:"7.62x39",
+        modelo:"NATO"
+    },{
+        id:2,
+        familia:"Automatico",
+        nombre:"Carabina-Colt",
+        precio:800,
+        calibre:" 5.56",
+        modelo:"NATO"
+    },{ 
+        id:3,
+        familia:"semi-automatico",
+        nombre:"FN Fal",
+        precio:1000,
+        calibre:"7.62x39",
+        modelo:"OTAN"
+
+
+    }
+   
+
+]
+
+let anvilGuns = new Tienda()
+
+anvilGuns.agregarProductos(catalogo)
+
+console.log(anvilGuns.stock)
+
+
+let automaticos = anvilGuns.devolverCard(["Automatico","semi-automatico"])
+console.log(automaticos)
+  document.getElementById("listadoProductos").innerHTML = ""
+  function filtrar(){
+    let categoriaUsar =prompt ("Ingrese la categoria deseada: Automatico, semi-automatico")
+    document.getElementById("listadoProductos").innerHTML += anvilGuns.devolverCard([categoriaUsar])
+    
+  }
+    document.getElementById("filtrar").onclick = ()=>filtrar()//FUNCION PARA MOSTRAR LAS CARDS
+ 
